@@ -1,0 +1,49 @@
+{
+  "process_id": "README_UPDATE-v1",
+  "category": "Documentation",
+  "timestamp": "2025-03-23T11:13:00Z",
+  "description": "Backend Integration Documentation",
+  "files_affected": ["README.md", "#Context/CONTEXT_INDEX.md"],
+  "changes": [
+    {
+      "type": "Documentation",
+      "detail": "Added comprehensive Django backend integration section to README",
+      "rationale": "Facilitate frontend-backend integration by providing clear documentation for backend developers"
+    },
+    {
+      "type": "Context",
+      "detail": "Updated CONTEXT_INDEX with README changes",
+      "rationale": "Maintain accurate tracking of documentation updates"
+    }
+  ],
+  "related_decisions": [
+    "API_CONTRACT-v1",
+    "DATA_MODELS-v1",
+    "AUTH_SCHEMA-v1",
+    "INTEGRATION_GUIDE-v1"
+  ],
+  "implementation_details": {
+    "environment_variables": {
+      "documented": true,
+      "backend_integration": "VITE_API_URL=http://localhost:8000/api"
+    },
+    "deployment_options": {
+      "documented": true,
+      "options": ["Separate deployment", "Django-served deployment"]
+    },
+    "api_documentation": {
+      "documented": true,
+      "links_added": true,
+      "contracts_referenced": [
+        "/Context/Architecture/API_CONTRACT-v1.json",
+        "/Context/Architecture/DATA_MODELS-v1.json",
+        "/Context/Security/AUTH_SCHEMA-v1.json"
+      ]
+    }
+  },
+  "validation": {
+    "type": "Manual",
+    "status": "Completed",
+    "notes": "Verified README links and content accuracy"
+  }
+}
