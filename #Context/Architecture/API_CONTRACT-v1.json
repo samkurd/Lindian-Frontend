@@ -1,0 +1,160 @@
+{
+  "decision_id": "API_CONTRACT-v1",
+  "category": "Architecture",
+  "version_history": [
+    {
+      "version": "1.0",
+      "timestamp": "2025-03-23T10:35:00Z",
+      "change_type": "Initial Implementation",
+      "files_affected": ["src/services/api.ts", "src/services/userService.ts"],
+      "issues_resolved": [
+        {
+          "id": "API-001",
+          "description": "Frontend-Backend API contract definition",
+          "resolution": "Documented expected endpoints, request/response formats"
+        }
+      ],
+      "validation": {
+        "testing": "Manual validation against userService implementation",
+        "rollback": "Git revert to pre-contract state"
+      }
+    }
+  ],
+  "api_contract": {
+    "base_url": "http://localhost:8000/api",
+    "environment_variable": "VITE_API_URL",
+    "content_type": "application/json",
+    "authentication": {
+      "type": "Session + CSRF",
+      "credentials": "include",
+      "mechanism": "Django session authentication with CSRF protection"
+    },
+    "global_error_format": {
+      "message": "string (error message)",
+      "status": "number (HTTP status code)",
+      "errors": "optional Record<string, string[]> (field validation errors)"
+    },
+    "global_response_format": {
+      "data": "T (response data of generic type)",
+      "status": "number (HTTP status code)",
+      "message": "optional string (success message)"
+    },
+    "endpoints": {
+      "authentication": {
+        "login": {
+          "method": "POST",
+          "url": "/auth/login/",
+          "request": {
+            "username": "string",
+            "password": "string"
+          },
+          "response": {
+            "user": "User object",
+            "token": "optional string (if JWT is used)"
+          },
+          "errors": [
+            {
+              "status": 400,
+              "description": "Invalid credentials"
+            }
+          ]
+        },
+        "register": {
+          "method": "POST",
+          "url": "/auth/register/",
+          "request": {
+            "username": "string",
+            "email": "string",
+            "password": "string",
+            "password_confirm": "string",
+            "first_name": "optional string",
+            "last_name": "optional string"
+          },
+          "response": "User object",
+          "errors": [
+            {
+              "status": 400,
+              "description": "Validation errors (username taken, password mismatch, etc.)"
+            }
+          ]
+        },
+        "logout": {
+          "method": "POST",
+          "url": "/auth/logout/",
+          "request": "empty object",
+          "response": {
+            "success": "boolean"
+          }
+        },
+        "password_change": {
+          "method": "POST",
+          "url": "/auth/password/change/",
+          "request": {
+            "old_password": "string",
+            "new_password": "string"
+          },
+          "response": {
+            "success": "boolean"
+          },
+          "errors": [
+            {
+              "status": 400,
+              "description": "Invalid old password or weak new password"
+            }
+          ]
+        }
+      },
+      "user": {
+        "profile": {
+          "method": "GET",
+          "url": "/user/profile/",
+          "response": "User object",
+          "errors": [
+            {
+              "status": 401,
+              "description": "Not authenticated"
+            }
+          ]
+        },
+        "update": {
+          "method": "PATCH",
+          "url": "/user/{userId}/",
+          "request": "Partial<User> object",
+          "response": "User object",
+          "errors": [
+            {
+              "status": 400,
+              "description": "Validation errors"
+            },
+            {
+              "status": 401,
+              "description": "Not authenticated"
+            },
+            {
+              "status": 403,
+              "description": "Permission denied"
+            }
+          ]
+        }
+      }
+    }
+  },
+  "django_implementation_notes": {
+    "authentication": {
+      "recommended_packages": ["django-rest-framework", "django-cors-headers"],
+      "session_auth_config": "REST_FRAMEWORK = { 'DEFAULT_AUTHENTICATION_CLASSES': ['rest_framework.authentication.SessionAuthentication'] }",
+      "cors_config": "CORS_ALLOW_CREDENTIALS = True, CORS_ALLOWED_ORIGINS = ['http://localhost:5173']"
+    },
+    "view_structure": "Use Django REST Framework ViewSets or APIViews",
+    "url_patterns": "Follow pattern in endpoint definitions",
+    "serializers": "Create serializers matching User interface definition",
+    "error_handling": "Use DRF exception handlers to maintain error format consistency"
+  },
+  "code_impact": [
+    "backend/users/views.py",
+    "backend/users/serializers.py",
+    "backend/users/urls.py",
+    "backend/config/settings.py"
+  ],
+  "tech_stack": ["Django", "Django REST Framework", "Python"]
+}

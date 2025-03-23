@@ -1,0 +1,151 @@
+{
+  "decision_id": "DATA_MODELS-v1",
+  "category": "Architecture",
+  "version_history": [
+    {
+      "version": "1.0",
+      "timestamp": "2025-03-23T10:36:00Z",
+      "change_type": "Initial Implementation",
+      "files_affected": ["src/services/userService.ts"],
+      "issues_resolved": [
+        {
+          "id": "MODEL-001",
+          "description": "Shared data model definitions",
+          "resolution": "Documented frontend data models for Django implementation"
+        }
+      ],
+      "validation": {
+        "testing": "Manual validation against existing TypeScript interfaces",
+        "rollback": "Git revert to pre-contract state"
+      }
+    }
+  ],
+  "data_models": {
+    "User": {
+      "typescript_interface": "User",
+      "fields": {
+        "id": {
+          "type": "number",
+          "django_field": "models.AutoField(primary_key=True)"
+        },
+        "username": {
+          "type": "string",
+          "django_field": "models.CharField(max_length=150, unique=True)",
+          "constraints": "Required, unique"
+        },
+        "email": {
+          "type": "string",
+          "django_field": "models.EmailField(max_length=254, unique=True)",
+          "constraints": "Required, unique, valid email format"
+        },
+        "first_name": {
+          "type": "string",
+          "django_field": "models.CharField(max_length=150, blank=True)",
+          "constraints": "Optional"
+        },
+        "last_name": {
+          "type": "string",
+          "django_field": "models.CharField(max_length=150, blank=True)",
+          "constraints": "Optional"
+        },
+        "is_active": {
+          "type": "boolean",
+          "django_field": "models.BooleanField(default=True)",
+          "constraints": "Default true"
+        },
+        "date_joined": {
+          "type": "string (ISO date)",
+          "django_field": "models.DateTimeField(auto_now_add=True)",
+          "constraints": "Auto-populated on creation"
+        },
+        "last_login": {
+          "type": "string (ISO date)",
+          "django_field": "models.DateTimeField(auto_now=True)",
+          "constraints": "Auto-updated on login"
+        }
+      },
+      "django_model": "extends AbstractUser or create custom User model",
+      "serializer_notes": "Use ModelSerializer with appropriate validation",
+      "endpoints": ["/user/profile/", "/user/{id}/"]
+    },
+    "LoginRequest": {
+      "typescript_interface": "LoginRequest",
+      "fields": {
+        "username": {
+          "type": "string",
+          "django_field": "N/A (serializer only)",
+          "constraints": "Required"
+        },
+        "password": {
+          "type": "string",
+          "django_field": "N/A (serializer only)",
+          "constraints": "Required, never returned in responses"
+        }
+      },
+      "django_model": "N/A (serializer only)",
+      "serializer_notes": "Create dedicated serializer for login validation",
+      "endpoints": ["/auth/login/"]
+    },
+    "RegisterRequest": {
+      "typescript_interface": "RegisterRequest",
+      "fields": {
+        "username": {
+          "type": "string",
+          "django_field": "N/A (serializer only)",
+          "constraints": "Required, unique"
+        },
+        "email": {
+          "type": "string",
+          "django_field": "N/A (serializer only)",
+          "constraints": "Required, unique, valid email format"
+        },
+        "password": {
+          "type": "string",
+          "django_field": "N/A (serializer only)",
+          "constraints": "Required, must meet password strength requirements"
+        },
+        "password_confirm": {
+          "type": "string",
+          "django_field": "N/A (serializer only)",
+          "constraints": "Required, must match password"
+        },
+        "first_name": {
+          "type": "string",
+          "django_field": "N/A (serializer only)",
+          "constraints": "Optional"
+        },
+        "last_name": {
+          "type": "string",
+          "django_field": "N/A (serializer only)",
+          "constraints": "Optional"
+        }
+      },
+      "django_model": "N/A (serializer only)",
+      "serializer_notes": "Create dedicated serializer with password validation",
+      "endpoints": ["/auth/register/"]
+    }
+  },
+  "django_implementation_notes": {
+    "model_location": "backend/users/models.py",
+    "serializer_location": "backend/users/serializers.py",
+    "user_model_options": [
+      "Use Django's built-in User model with AbstractUser",
+      "Create custom User model (recommended for future flexibility)"
+    ],
+    "validation": {
+      "password_validation": "Use Django's password validation framework",
+      "email_validation": "Use Django's built-in EmailValidator",
+      "custom_validations": "Implement in serializer's validate_* methods"
+    },
+    "data_transformation": {
+      "date_formatting": "Use Django REST Framework's DateTimeField with ISO format",
+      "password_handling": "Hash passwords using Django's make_password() function"
+    }
+  },
+  "code_impact": [
+    "backend/users/models.py",
+    "backend/users/serializers.py",
+    "backend/users/views.py"
+  ],
+  "tech_stack": ["Django", "Django REST Framework", "Python"]
+}
