@@ -1,0 +1,90 @@
+{
+  "decision_id": "FRONTEND_ARCH-v1",
+  "category": "Architecture",
+  "version_history": [
+    {
+      "version": "1.0",
+      "timestamp": "2025-03-23T09:52:00Z",
+      "change_type": "Initial Implementation",
+      "files_affected": [
+        "src/",
+        "package.json",
+        "tsconfig.json",
+        "vite.config.ts"
+      ],
+      "issues_resolved": [
+        {
+          "id": "ARCH-001",
+          "description": "Project structure establishment",
+          "resolution": "Created React + TypeScript + Vite foundation"
+        },
+        {
+          "id": "ARCH-002",
+          "description": "Development workflow setup",
+          "resolution": "Added npm scripts for dev, build, lint"
+        }
+      ],
+      "validation": {
+        "testing": "Base project builds successfully",
+        "rollback": "Git revert to initial commit"
+      }
+    }
+  ],
+  "architecture": {
+    "frontend": {
+      "framework": "React 19.0.0",
+      "buildTool": "Vite 6.2.2",
+      "language": "TypeScript 5.8",
+      "styling": "TailwindCSS 4.0.15",
+      "uiComponents": "Untitled UI (latest)"
+    },
+    "structure": {
+      "components": {
+        "path": "src/components",
+        "pattern": "Atomic Design"
+      },
+      "pages": {
+        "path": "src/pages",
+        "routing": "React Router"
+      },
+      "services": {
+        "path": "src/services",
+        "pattern": "API Adapters"
+      },
+      "types": {
+        "path": "src/types",
+        "pattern": "Centralized Types"
+      },
+      "hooks": {
+        "path": "src/hooks",
+        "pattern": "Custom React Hooks"
+      },
+      "utils": {
+        "path": "src/utils",
+        "pattern": "Pure Helper Functions"
+      },
+      "styles": {
+        "path": "src/styles",
+        "pattern": "TailwindCSS Configuration"
+      }
+    },
+    "stateManagement": {
+      "local": "React Context",
+      "global": "To be determined"
+    },
+    "apiCommunication": {
+      "pattern": "Service Adapters",
+      "dataFetching": "To be determined",
+      "backend": "Django API"
+    }
+  },
+  "code_impact": [
+    "src/components",
+    "src/pages",
+    "src/services",
+    "src/types",
+    "src/hooks",
+    "src/utils"
+  ],
+  "tech_stack": ["React", "TypeScript", "Vite", "TailwindCSS", "Untitled UI"]
+}

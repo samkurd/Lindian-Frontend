@@ -1,0 +1,120 @@
+{
+  "decision_id": "COMPONENT_LIB-v1",
+  "category": "Frontend",
+  "version_history": [
+    {
+      "version": "1.0",
+      "timestamp": "2025-03-23T09:53:00Z",
+      "change_type": "Initial Implementation",
+      "files_affected": [
+        "tailwind.config.js",
+        "postcss.config.js",
+        "src/styles/tailwind.css"
+      ],
+      "issues_resolved": [
+        {
+          "id": "UI-001",
+          "description": "UI framework selection",
+          "resolution": "Implemented Untitled UI with TailwindCSS"
+        },
+        {
+          "id": "UI-002",
+          "description": "Component styling consistency",
+          "resolution": "Configured Tailwind theme to match Untitled UI spec"
+        }
+      ],
+      "validation": {
+        "testing": "Component library renders correctly",
+        "rollback": "Git revert to pre-UI implementation"
+      }
+    }
+  ],
+  "component_library": {
+    "name": "Untitled UI",
+    "version": "latest",
+    "tailwind_integration": {
+      "theme_extension": true,
+      "custom_plugins": ["@tailwindcss/forms", "@tailwindcss/typography"]
+    },
+    "core_components": [
+      {
+        "name": "Button",
+        "variants": ["primary", "secondary", "tertiary", "danger", "success"],
+        "props": ["size", "disabled", "loading", "leftIcon", "rightIcon"],
+        "path": "src/components/ui/Button"
+      },
+      {
+        "name": "Input",
+        "variants": ["default", "with-icon", "with-button", "error"],
+        "props": ["placeholder", "type", "disabled", "error", "helperText"],
+        "path": "src/components/ui/Input"
+      },
+      {
+        "name": "Card",
+        "variants": ["default", "interactive", "elevated"],
+        "props": ["padding", "shadow", "rounded"],
+        "path": "src/components/ui/Card"
+      },
+      {
+        "name": "Avatar",
+        "variants": ["image", "initials", "icon"],
+        "props": ["size", "src", "alt", "fallback"],
+        "path": "src/components/ui/Avatar"
+      },
+      {
+        "name": "Badge",
+        "variants": ["default", "primary", "success", "warning", "danger"],
+        "props": ["text", "icon", "size"],
+        "path": "src/components/ui/Badge"
+      }
+    ],
+    "design_tokens": {
+      "colors": {
+        "primary": "Blue scale with 50-950 range",
+        "neutral": "Gray scale with 50-950 range",
+        "success": "Green scale",
+        "warning": "Yellow scale",
+        "danger": "Red scale",
+        "info": "Blue scale"
+      },
+      "typography": {
+        "fontFamily": "Inter, sans-serif",
+        "sizes": ["xs", "sm", "md", "lg", "xl", "2xl", "3xl"],
+        "weights": ["regular", "medium", "semibold", "bold"],
+        "lineHeights": ["tight", "normal", "relaxed", "loose"]
+      },
+      "spacing": {
+        "pattern": "4px increments",
+        "sizes": [
+          "0.5",
+          "1",
+          "1.5",
+          "2",
+          "2.5",
+          "3",
+          "4",
+          "5",
+          "6",
+          "8",
+          "10",
+          "12",
+          "16",
+          "20",
+          "24"
+        ]
+      },
+      "shadows": {
+        "sm": "Small shadow",
+        "md": "Medium shadow",
+        "lg": "Large shadow",
+        "xl": "Extra large shadow"
+      }
+    }
+  },
+  "implementation": {
+    "structure": "Atomic Design",
+    "directory": "src/components/ui",
+    "usage_examples": "src/examples/ComponentExamples.tsx"
+  },
+  "code_impact": ["src/components/ui", "src/styles", "tailwind.config.js"]
+}
